@@ -1,19 +1,17 @@
-const addBtn = document.getElementById("addBtn");
-const taskInput = document.getElementById("taskInput");
-const taskList = document.getElementById("taskList");
+const searchInput = document.getElementById('searchInput');
+const table = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
 
-addBtn.addEventListener("click", () => {
-  const task = taskInput.value.trim();
-  if (task === "") return;
+searchInput.addEventListener('input', function () {
+  const filter = this.value.trim().toLowerCase();
 
-  const li = document.createElement("li");
-  li.textContent = task;
+  for (let row of table.rows) {
+    const roll = row.cells[0].textContent.toLowerCase();
+    const name = row.cells[1].textContent.toLowerCase();
 
-  const delBtn = document.createElement("button");
-  delBtn.textContent = "X";
-  delBtn.onclick = () => li.remove();
-
-  li.appendChild(delBtn);
-  taskList.appendChild(li);
-  taskInput.value = "";
+    if (roll.includes(filter) || name.includes(filter)) {
+      row.classList.remove('hidden');
+    } else {
+      row.classList.add('hidden');
+    }
+  }
 });
